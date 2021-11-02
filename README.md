@@ -73,9 +73,9 @@ or as a filename, where the file contains the token on a single line. In most si
 **NOTE:** For human readability the examples below display output as multi-line json, but in practice atp.rb outputs single-line json.
 
 ## List manipulation
-ATP Cloud supports two types of custom feeds; a whitelist and a blacklist. When implemented in an ATP policy on a Juniper Networks SRX firewall, the whitelist is intended to permit anything in the list. Similarly, the blacklist blocks anything in the list.
+ATP Cloud supports two types of custom feeds; an allowlist and a blocklist. When implemented in an ATP policy on a Juniper Networks SRX firewall, the allowlist is intended to permit anything in the list. Similarly, the blocklist blocks anything in the list.
 
-Whitelists and blacklists can contain IP, URL and domain entities. The following examples use a "domain" entity type which uses the "-D" or "--domain" entity parameters. All lists are accessible and manipulated the same way by changing the CLI entity parameter to the appropriate entity type. For example, URL lists use "-u" or "--url," and IP lists use "-i" or "--ip."
+Allowlists and blocklists can contain IP, URL and domain entities. The following examples use a "domain" entity type which uses the "-D" or "--domain" entity parameters. All lists are accessible and manipulated the same way by changing the CLI entity parameter to the appropriate entity type. For example, URL lists use "-u" or "--url," and IP lists use "-i" or "--ip."
 
 Combine the entity type parameter with an action parameter to get the contents of a list, or add or delete items from a list.
 
@@ -99,7 +99,7 @@ When retrieving the contents of a list the entity type parameter (-D) takes no a
 
 When adding or deleting entities from a list, the entity type parameter takes an argument. The argument can be single entity or a file containing multiple entities (one per line):
 
-    $ ./atp.rb -a add -l blacklist -D yetanotherdomain.com -t auth_token
+    $ ./atp.rb -a add -l blocklist -D yetanotherdomain.com -t auth_token
     {
       "data": {},
       "request_id": "7a42437e-0c68-448b-9bb2-5d7a90a93f56"
@@ -107,7 +107,7 @@ When adding or deleting entities from a list, the entity type parameter takes an
 
 Result:
 
-    $ ./atp.rb -a get -l blacklist -D -t auth_token
+    $ ./atp.rb -a get -l blocklist -D -t auth_token
     {
       "data": {
         "count": 3,
@@ -122,7 +122,7 @@ Result:
 
 ## Delete single entities
 
-    $ ./atp.rb -a delete -l blacklist -D another.com -t auth_token
+    $ ./atp.rb -a delete -l blocklist -D another.com -t auth_token
     {
       "data": {},
       "request_id": "45baa298-a3e5-423b-a715-ea933fcc4b8a"
@@ -130,7 +130,7 @@ Result:
 
 Result:
 
-    $ ./atp.rb -a get -l blacklist -D -t auth_token
+    $ ./atp.rb -a get -l blocklist -D -t auth_token
     {
       "data": {
         "count": 2,
@@ -152,14 +152,14 @@ Contents of file
 
 Command using an entity list file:
 
-    $ ./atp.rb -a delete -l blacklist -D example_data/domain_blocklist -t auth_token
+    $ ./atp.rb -a delete -l blocklist -D example_data/domain_blocklist -t auth_token
     {
       "request_id": "065d6461-4ff0-4adf-9844-c859ae3c3fc3"
     }
 
 Result:
 
-    $ ./atp.rb -a get -l blacklist -D -t auth_token
+    $ ./atp.rb -a get -l blocklist -D -t auth_token
     {
       "data": {},
       "request_id": "0e191a95-6e32-44b1-b917-407f55a6b215"
