@@ -20,7 +20,7 @@ Included are:
 Daniel McNulty, Lead Security Specialist at Juniper Networks
 
 ## License
-License stuff goes here.
+BSD 3-clause
 
 ## Copyright
 Copyright (c) 2021, Daniel McNulty. All rights reserved.

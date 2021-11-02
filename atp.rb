@@ -4,7 +4,6 @@ load './lib/version.rb'
 load './lib/opts/opts.rb'
 load './lib/http/http.rb'
 
-form_data = ''
 list = $options[:list]
 server_type = $options[:server_type]
 one_or_n = $options[:one_or_n]
