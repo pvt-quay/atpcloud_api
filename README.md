@@ -73,7 +73,9 @@ or as a filename, where the file contains the token on a single line. In most si
 **NOTE:** For human readability the examples below display output as multi-line json, but in practice atp.rb outputs single-line json.
 
 ## List manipulation
-ATP Cloud supports two types of custom feeds; an allowlist and a blocklist. When implemented in an ATP policy on a Juniper Networks SRX firewall, the allowlist is intended to permit anything in the list. Similarly, the blocklist blocks anything in the list.
+ATP Cloud supports two types of custom feeds; an allowlist and a blocklist. When implemented in an ATP policy on a Juniper Networks SRX firewall, the allowlist is intended to permit anything in the list. Similarly, the blocklist blocks anything in the list. Documentation is located here: 
+
+https://www.juniper.net/documentation/us/en/software/sky-atp/sky-atp/topics/concept/sky-atp-whitelist-blacklist-overview.html
 
 Allowlists and blocklists can contain IP, URL and domain entities. The following examples use a "domain" entity type which uses the "-D" or "--domain" entity parameters. All lists are accessible and manipulated the same way by changing the CLI entity parameter to the appropriate entity type. For example, URL lists use "-u" or "--url," and IP lists use "-i" or "--ip."
 
@@ -81,7 +83,7 @@ Combine the entity type parameter with an action parameter to get the contents o
 
 ## Retrieving a list
 
-When retrieving the contents of a list the entity type parameter (-D) takes no argument:
+When retrieving the contents of a list the entity type parameter takes no argument:
 
     $ ./atp.rb -a get -l blocklist -D -t auth_token
     {

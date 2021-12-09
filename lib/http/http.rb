@@ -1,5 +1,7 @@
 #!/usr/bin/ruby
 
+load './lib/http/errors.rb'
+require "rest_client"
 require "net/http"
 require "uri"
 
@@ -33,7 +35,7 @@ class ATP
 		exec(uri, 'patch')
 	end
 
-	def submit(uri)
+	def post(uri)
 		exec(uri, 'post')
 	end
 
@@ -53,6 +55,7 @@ class ATP
 		when 'post'
 			@form_data = compose_form_data
 			request = Net::HTTP::Post.new(uri.request_uri)
+			request.set_form_data @form_data
 		end
 		do_request(http, request)
 	end
@@ -69,8 +72,16 @@ class ATP
 				request.set_form(@form_data, 'multipart/form-data')
 				resp = http.request(request)
 			end
-		rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError,
+		rescue Timeout::Error, Errno::EINVAL, Errno::ECONNRESET, EOFError, SocketError,
       Net::HTTPBadResponse, Net::HTTPHeaderSyntaxError, Net::ProtocolError, Errno::ECONNREFUSED => e
+			puts e
+			exit 1
+		end
+		if resp.code == '200' || resp.code == '202'
+			puts "#{resp.code} received: #{APIErrors::ERRORS[:"#{resp.code}"]}" if @options[:debug]
+		else
+			puts "#{resp.code} received: #{APIErrors::ERRORS[:"#{resp.code}"]}"
+			exit 1
 		end
 		return resp
 	end
@@ -85,10 +96,13 @@ class ATP
 	end
 
 	def compose_form_data
-		if @options[:one_or_n] == 'file' then
-  		[[ 'file', File.read(@options[:filename]), {filename: @options[:filename]} ]]
+		if @options[:one_or_n] == 'file' && @options[:action] != 'submit' then
+  		[[ 'file', File.read(@options[:filename]), filename: @options[:filename] ]]
 		elsif @options[:one_or_n] == 'param' then
-  		[[ 'server', @options[@options[:server_type].intern], {server: @options[@options[:server_type].intern]} ]]
+  		[[ 'server', @options[@options[:server_type].intern], server: @options[@options[:server_type].intern] ]]
+		elsif @options[:one_or_n] == 'file' && @options[:action] == 'submit'
+  		#[[ 'file', File.read(@options[:filename]), filename: @options[:filename], sample_url: 'https://totallymadeup.com', remote_ip: '127.0.0.1' ]]
+  		[[ 'file', File.read(@options[:filename]), filename: @options[:filename] ]]
 		else
 			nil
 		end

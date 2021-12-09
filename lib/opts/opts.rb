@@ -107,14 +107,17 @@ opt_parser = OptionParser.new do |opts|
  		options[:one_or_n] = false
  	end
 
-	#opts.on("-s", "--submit FILE", String, "Submit a malware sample for analysis") do |s|
-	#	begin	
-	#		options[:submit] = File.read(s)
-	#	rescue Errno::EACCES, Errno::ENOENT
-	#		puts '"submit" action requires a readable file as an argument'
-	#		exit 1
-	#	end
-	#end
+	opts.on("-s", "--submit FILE", String, "Submit a malware sample for analysis") do |s|
+		begin	
+			File.open(s)
+			options[:filename] = s
+			options[:action] = 'submit'
+			options[:one_or_n] = 'file'
+			rescue Errno::EACCES, Errno::ENOENT
+				puts '"submit" action requires a readable file as an argument'
+			exit 1
+		end
+	end
 	
  	opts.on("-t", "--token STRING|FILE", "Authorization token") do |t|
 		begin	
@@ -166,7 +169,7 @@ if options[:action] == 'ping' || options[:action] == 'submit' || options[:action
 	nil
 elsif options.has_key?(:action) || options.has_key?(:list) then
 	# but doesn't have both
-	if ! options.has_key?(:action) && options.has_key?(:list) then
+	if ! ( options.has_key?(:action) && options.has_key?(:list) ) then
 		puts "Action and list must be specified"
 		exit 1
 	end

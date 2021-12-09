@@ -17,6 +17,8 @@ when 'ih'
 	response = atp.get_ih('/infected_hosts')
 when 'add'
 	response = atp.patch("/#{list}/#{one_or_n}/#{server_type}")
+when 'submit'
+	response = atp.post("/submit/sample")
 when 'delete'
 	response = atp.delete("/#{list}/#{one_or_n}/#{server_type}")
 when 'lookup'
