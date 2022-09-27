@@ -5,7 +5,7 @@
 
 As of November 2021, the Juniper Network ATP Cloud feed API is documented here:
 
-https://www.juniper.net/documentation/en_US/release-independent/sky-atp/information-products/topic-collections/sky-atp-open-apis.html#operation--v1-skyatp-submit-sample-post
+https://www.juniper.net/documentation/en_US/release-independent/sky-atp/information-products/topic-collections/sky-atp-open-apis.html
 
 Included are:
  - atp.rb - the main program
