@@ -188,7 +188,7 @@ When ATP Cloud receives a file for analysis it will keep a SHA256 hash of that f
 
 Note the different field contents for this benign file:
 
-    $ ./atp.rb -H benign_hash -t auth_token
+    $ ./atp.rb -H example_data/benign_hash -t auth_token
     {
       "category": "archive",
       "last_update": 1463200282,
@@ -201,7 +201,7 @@ Note the different field contents for this benign file:
 
 And compare to a malicious file:
 
-    $ ./atp.rb -H malicious_hash -t auth_token
+    $ ./atp.rb -H example_data/malicious_hash -t auth_token
     {
       "category": "executable",
       "last_update": 1633618827,
@@ -221,7 +221,8 @@ And compare to a malicious file:
 "last_update" in seconds since the Epoch.
 
     $ ./atp.rb -v
-    {
-      "version": "0.0.1",
-      "last_update": 1635708532
-    }
+		{
+  		"version": "0.0.2",
+  		"last_update": 1664211881
+		}
+

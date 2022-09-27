@@ -223,6 +223,5 @@ when 'get', 'delete', 'add'
 	end
 end
 
-
 $options = options
 pp $options if $options[:debug]
