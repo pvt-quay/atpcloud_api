@@ -221,8 +221,8 @@ And compare to a malicious file:
 "last_update" in seconds since the Epoch.
 
     $ ./atp.rb -v
-		{
-  		"version": "0.0.2",
-  		"last_update": 1664211881
-		}
+    {
+      "version": "0.0.2",
+      "last_update": 1664211881
+    }
 
